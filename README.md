@@ -26,6 +26,12 @@
 
 无需注册、无需联网、支持离线使用，一键分享参数给跑友。
 
+## 📱预览
+
+<p align="center">
+  <img src="preview-dark.png" width="50%" alt="浅色预览" />
+</p>
+
 ---
 
 ## ✨ 功能特性

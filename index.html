@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#07130d">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="呼吸节奏移动小工具：快速计算跑步心率区间、RQ 供能倾向、目标配速与今日训练建议。">
+  <title>呼吸节奏 Mobile</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./favicon.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png" sizes="180x180">
+  <link rel="preload" href="./assets/styles.css" as="style">
+  <link rel="preload" href="./assets/app.js" as="script">
+  <link rel="stylesheet" href="./assets/styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">RQrunning Mobile</p>
+      <h1>呼吸节奏</h1>
+    </div>
+    <button id="installBtn" class="ghost-btn" hidden>安装</button>
+  </header>
+
+  <main class="app-shell">
+    <section class="hero-card">
+      <div>
+        <p class="eyebrow">移动端训练强度工具</p>
+        <h2>追逐 PB，明晰今日跑速</h2>
+      </div>
+      <p>适合跑前 30 秒快速确认：心率区间、RQ 供能倾向、目标配速和训练处方。</p>
+    </section>
+
+    <section class="card controls-card" aria-labelledby="settingsTitle">
+      <div class="section-head">
+        <h2 id="settingsTitle">基础参数</h2>
+        <button id="resetBtn" class="ghost-btn">重置</button>
+      </div>
+
+      <div class="field-group">
+        <div class="field-label">
+          <label for="maxHR">最大心率</label>
+          <output id="maxHRValue">190 bpm</output>
+        </div>
+        <div class="step-control">
+          <button class="step-btn" data-target="maxHR" data-step="-1" aria-label="最大心率减一">-</button>
+          <input id="maxHR" type="range" min="150" max="210" step="1" value="190">
+          <button class="step-btn" data-target="maxHR" data-step="1" aria-label="最大心率加一">+</button>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-label">
+          <label for="restHR">静息心率</label>
+          <output id="restHRValue">50 bpm</output>
+        </div>
+        <div class="step-control">
+          <button class="step-btn" data-target="restHR" data-step="-1" aria-label="静息心率减一">-</button>
+          <input id="restHR" type="range" min="40" max="90" step="1" value="50">
+          <button class="step-btn" data-target="restHR" data-step="1" aria-label="静息心率加一">+</button>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-label">
+          <label for="pbPace">10km PB 配速</label>
+          <span id="reserveValue">储备 140 bpm</span>
+        </div>
+        <input id="pbPace" class="pace-input" type="text" value="03:50" placeholder="0350" inputmode="numeric" autocomplete="off">
+        <div class="pace-shortcuts">
+          <button class="pace-shortcut-btn" data-pace="03:00">3:00</button>
+          <button class="pace-shortcut-btn" data-pace="03:30">3:30</button>
+          <button class="pace-shortcut-btn" data-pace="04:00">4:00</button>
+          <button class="pace-shortcut-btn" data-pace="04:30">4:30</button>
+          <button class="pace-shortcut-btn" data-pace="05:00">5:00</button>
+        </div>
+        <p id="paceHint" class="hint">输入 350、0350 或 03:50，自动整理为 mm:ss。</p>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="goalTitle">
+      <div class="section-head">
+        <h2 id="goalTitle">训练目标</h2>
+        <button id="shareBtn" class="ghost-btn">复制链接</button>
+      </div>
+      <div id="zonePicker" class="zone-picker" role="tablist" aria-label="选择训练目标"></div>
+    </section>
+
+    <section class="result-card" aria-live="polite">
+      <p id="resultZone" class="eyebrow">T 乳酸阈值</p>
+      <strong id="resultPace">03:55/km</strong>
+      <span id="resultHR">168-173 bpm</span>
+      <p id="resultRQ">RQ 0.90-0.95 · 糖原供能为主</p>
+    </section>
+
+    <section class="card prescription-card" aria-labelledby="todayTitle">
+      <h2 id="todayTitle">今日训练处方</h2>
+      <p id="prescriptionText">热身 15 分钟 + 4 x 8 分钟节奏跑 + 放松 10 分钟。</p>
+    </section>
+
+    <section class="card" aria-labelledby="raceTitle">
+      <h2 id="raceTitle">比赛预测</h2>
+      <div id="raceGrid" class="race-grid"></div>
+    </section>
+
+    <section class="card" aria-labelledby="workoutTitle">
+      <h2 id="workoutTitle">常用课表</h2>
+      <div id="workoutList" class="workout-list"></div>
+    </section>
+
+    <p class="disclaimer">本工具仅用于训练参考，不替代医学建议或专业教练指导。</p>
+  </main>
+
+  <aside class="bottom-result" aria-live="polite">
+    <div>
+      <span id="stickyZone">T 区</span>
+      <strong id="stickyPace">03:55/km</strong>
+    </div>
+    <span id="stickyHR">168-173 bpm</span>
+  </aside>
+
+  <script src="./assets/app.js" type="module" defer></script>
+</body>
+</html>

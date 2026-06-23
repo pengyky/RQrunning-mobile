@@ -1,0 +1,19 @@
+{
+  "name": "呼吸节奏 Mobile",
+  "short_name": "呼吸节奏",
+  "description": "移动端跑步训练强度、心率区间与配速计算小工具。",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#07130d",
+  "theme_color": "#07130d",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "./favicon.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
